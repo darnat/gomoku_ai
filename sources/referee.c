@@ -160,7 +160,7 @@ t_pawn		*checkEaten(t_board *board)
 	{
 	  if ((i || j) && checkEatenDirection(board, i, j))
 	    {
-	      ptc('W');
+	      puts("W");
 	    }
 	}
     }
