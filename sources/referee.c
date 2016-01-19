@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:17:15 2016 hirt_r
-** Last update Tue Jan 19 17:53:24 2016 hirt_r
+** Last update Tue Jan 19 18:31:12 2016 hirt_r
 */
 
 #include "struct_team.h"
@@ -145,6 +145,8 @@ int		checkEatenDirection(t_board *board, int i, int j, t_pawn **list)
     {
       addPawn(list, board->lastp->x + i, board->lastp->y + j);
       addPawn(list, board->lastp->x + i * 2, board->lastp->y + j * 2);
+      removePawnAt(board, board->lastp->x + i, board->lastp->y + j);
+      removePawnAt(board, board->lastp->x + i * 2, board->lastp->y + j * 2);
       return (1);
     }
   return (0);
@@ -169,7 +171,7 @@ t_pawn		*checkEaten(t_board *board)
 	    }
 	}
     }
-  return (NULL);
+  return (list);
 }
 
 int		checkWinDirection(t_board *board, int i, int j)
