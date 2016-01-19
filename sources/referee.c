@@ -5,12 +5,13 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:17:15 2016 hirt_r
-** Last update Sun Jan 17 21:09:38 2016 hirt_r
+** Last update Tue Jan 19 17:53:24 2016 hirt_r
 */
 
 #include "struct_team.h"
 #include "struct_pawn.h"
 #include "struct_board.h"
+#include "board.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -127,7 +128,7 @@ int		setPawn(t_board *board, int x, int y, int id)
   return (0);
 }
 
-int		checkEatenDirection(t_board *board, int i, int j)
+int		checkEatenDirection(t_board *board, int i, int j, t_pawn **list)
 {
   t_pawn	*p1;
   t_pawn	*p2;
@@ -135,34 +136,91 @@ int		checkEatenDirection(t_board *board, int i, int j)
 
   p1 = getPawnAt(board, board->lastp->x + i, board->lastp->y + j);
   p2 = getPawnAt(board, board->lastp->x + i * 2, board->lastp->y + j * 2);
-  p3 = getPawnAt(board, board->lastp->x + i, board->lastp->y + j * 3);
+  p3 = getPawnAt(board, board->lastp->x + i * 3, board->lastp->y + j * 3);
   if (!(p1 && p2 && p3))
     return (0);
   if (board->lastp->team->id == p3->team->id &&
       board->lastp->team->id != p1->team->id &&
       board->lastp->team->id != p2->team->id)
-    return (1);
+    {
+      addPawn(list, board->lastp->x + i, board->lastp->y + j);
+      addPawn(list, board->lastp->x + i * 2, board->lastp->y + j * 2);
+      return (1);
+    }
   return (0);
 }
 
 t_pawn		*checkEaten(t_board *board)
 {
-  /* t_pawn	*list; */
+  t_pawn	*list;
   int		i;
   int		j;
 
-  /* list = NULL; */
+  list = NULL;
   i = -2;
   while (++i < 2)
     {
       j = -2;
       while (++j < 2)
 	{
-	  if ((i || j) && checkEatenDirection(board, i, j))
+	  if (i || j)
 	    {
-	      puts("W");
+	      checkEatenDirection(board, i, j, &list);
 	    }
 	}
     }
   return (NULL);
+}
+
+int		checkWinDirection(t_board *board, int i, int j)
+{
+  t_pawn	*p1;
+  t_pawn	*p2;
+  t_pawn	*p3;
+  t_pawn	*p4;
+  t_pawn	*p5;
+  int		x;
+  int		id;
+
+  x = -5;
+  id = board->lastp->team->id;
+  while (++x < 0)
+    {
+      p1 = getPawnAt(board, board->lastp->x + i * (x), board->lastp->y + j * (x));
+      p2 = getPawnAt(board, board->lastp->x + i * (x + 1), board->lastp->y + j * (x + 1));
+      p3 = getPawnAt(board, board->lastp->x + i * (x + 2), board->lastp->y + j * (x + 2));
+      p4 = getPawnAt(board, board->lastp->x + i * (x + 3), board->lastp->y + j * (x + 3));
+      p5 = getPawnAt(board, board->lastp->x + i * (x + 4), board->lastp->y + j * (x + 4));
+      if (p1 && p2 && p3 && p4 && p5)
+	{
+	  if (p1->team->id == id &&
+	      p2->team->id == id &&
+	      p3->team->id == id &&
+	      p4->team->id == id &&
+	      p5->team->id == id)
+	    return (1);
+	}
+    }
+  return (0);
+}
+
+int		checkWin(t_board *board)
+{
+  int		i;
+  int		j;
+
+  i = -2;
+  while (++i < 2)
+    {
+      j = -2;
+      while (++j < 2)
+	{
+	  if ((i || j) && checkWinDirection(board, i, j))
+	    {
+	      ptc('O');
+	      return (1);
+	    }
+	}
+    }
+  return (0);
 }

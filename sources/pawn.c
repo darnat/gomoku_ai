@@ -5,13 +5,14 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 15:59:05 2016 hirt_r
-** Last update Sun Jan 17 18:32:13 2016 hirt_r
+** Last update Tue Jan 19 17:00:13 2016 hirt_r
 */
 
 #include "struct_team.h"
 #include "struct_pawn.h"
 #include "struct_board.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 t_pawn	*getPawnAt(t_board *board, int x, int y)
 {
@@ -48,6 +49,23 @@ void	removePawnAt(t_board *board, int x, int y)
 	  return;
 	}
     }
+}
+
+t_pawn		*addPawn(t_pawn **list, int x, int y)
+{
+  t_pawn	*tmp;
+
+  if ((tmp = malloc(sizeof(t_pawn))) == NULL)
+    return (NULL);
+
+  tmp->x = x;
+  tmp->y = y;
+  tmp->prev = NULL;
+  tmp->next = *list;
+  if (*list)
+    (*list)->prev = tmp;
+  *list = tmp;
+  return (tmp);
 }
 
 t_pawn	*addPawnAt(t_board *board, int x, int y)
