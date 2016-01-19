@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:17:15 2016 hirt_r
-** Last update Tue Jan 19 18:46:22 2016 hirt_r
+** Last update Tue Jan 19 19:40:39 2016 hirt_r
 */
 
 #include "struct_team.h"
@@ -133,6 +133,7 @@ int		checkEatenDirection(t_board *board, int i, int j, t_pawn **list)
   t_pawn	*p1;
   t_pawn	*p2;
   t_pawn	*p3;
+  t_team	*team;
 
   p1 = getPawnAt(board, board->lastp->x + i, board->lastp->y + j);
   p2 = getPawnAt(board, board->lastp->x + i * 2, board->lastp->y + j * 2);
@@ -147,6 +148,8 @@ int		checkEatenDirection(t_board *board, int i, int j, t_pawn **list)
       addPawn(list, board->lastp->x + i * 2, board->lastp->y + j * 2);
       removePawnAt(board, board->lastp->x + i, board->lastp->y + j);
       removePawnAt(board, board->lastp->x + i * 2, board->lastp->y + j * 2);
+      team = getTeam(board, board->lastp->team->id);
+      team->stones += 2;
       return (1);
     }
   return (0);
@@ -210,8 +213,14 @@ int		checkWin(t_board *board)
 {
   int		i;
   int		j;
+  t_team	*team;
+  int		id;
 
   i = -2;
+  id = board->lastp->team->id;
+  team = getTeam(board, id);
+  if (team->stones >= 10)
+    return (1);
   while (++i < 2)
     {
       j = -2;
@@ -219,7 +228,6 @@ int		checkWin(t_board *board)
 	{
 	  if ((i || j) && checkWinDirection(board, i, j))
 	    {
-	      ptc('O');
 	      return (1);
 	    }
 	}
