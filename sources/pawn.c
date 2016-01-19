@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 15:59:05 2016 hirt_r
-** Last update Tue Jan 19 17:00:13 2016 hirt_r
+** Last update Tue Jan 19 18:46:15 2016 hirt_r
 */
 
 #include "struct_team.h"
@@ -48,6 +48,7 @@ void	removePawnAt(t_board *board, int x, int y)
 	  free(tmp);
 	  return;
 	}
+      tmp = tmp->next;
     }
 }
 

@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:17:15 2016 hirt_r
-** Last update Tue Jan 19 18:31:12 2016 hirt_r
+** Last update Tue Jan 19 18:46:22 2016 hirt_r
 */
 
 #include "struct_team.h"
