@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 15:51:50 2016 hirt_r
-** Last update Sun Jan 17 19:52:32 2016 hirt_r
+** Last update Wed Jan 20 18:03:58 2016 hirt_r
 */
 
 #ifndef STRUCT_BOARD_H_
@@ -18,6 +18,7 @@ typedef	struct		s_board
   t_pawn		*pawns;
   t_team		*teams;
   t_pawn		*lastp;
+  int			level;
 }			t_board;
 
 int	setPawn(t_board *, int, int, int);

@@ -5,12 +5,13 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:17:15 2016 hirt_r
-** Last update Tue Jan 19 19:40:39 2016 hirt_r
+** Last update Thu Jan 21 21:27:25 2016 hirt_r
 */
 
 #include "struct_team.h"
 #include "struct_pawn.h"
 #include "struct_board.h"
+#include "struct_tree.h"
 #include "board.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -121,10 +122,10 @@ int		setPawn(t_board *board, int x, int y, int id)
   if (checkThreeRule(board, tmp))
     {
       removePawnAt(board, x, y);
-      ptc('F');
       return (1);
     }
   board->lastp = tmp;
+  board->level += 1;
   return (0);
 }
 

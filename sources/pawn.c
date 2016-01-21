@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 15:59:05 2016 hirt_r
-** Last update Tue Jan 19 18:46:15 2016 hirt_r
+** Last update Thu Jan 21 22:17:20 2016 hirt_r
 */
 
 #include "struct_team.h"
@@ -13,6 +13,7 @@
 #include "struct_board.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 t_pawn	*getPawnAt(t_board *board, int x, int y)
 {
