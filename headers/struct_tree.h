@@ -5,13 +5,13 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 15:54:18 2016 hirt_r
-** Last update Wed Jan 20 19:25:31 2016 hirt_r
+** Last update Fri Jan 22 19:18:56 2016 hirt_r
 */
 
 #ifndef STRUCT_TREE_H_
 # define STRUCT_TREE_H_
 
-#define DEPTH 3
+#define DEPTH 2
 
 typedef struct	s_tree
 {
@@ -23,6 +23,7 @@ typedef struct	s_tree
   struct s_tree	*prev;
   t_board	*board;
   int		level;
+  int		value;
 }		t_tree;
 
 #endif /* !STRUCT_PAWN_H_ */
