@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Wed Jan 20 17:47:44 2016 hirt_r
-** Last update Fri Jan 22 20:58:08 2016 hirt_r
+** Last update Sat Jan 23 14:19:23 2016 hirt_r
 */
 
 #include <stdlib.h>
@@ -39,7 +39,6 @@ void		affBoard(t_board *board)
 	}
       write(1, "\n", 1);
     }
-  calcValue(board);
   write(1, "-------------------\n\n", 21);
 }
 
@@ -67,21 +66,31 @@ void		addItemBranch(t_tree *tree, int i, int j)
 {
   t_tree	*tmp;
   t_tree	*newtree;
+  t_pawn	*pawn;
+  t_team	*team;
 
-  if (tree->level >= DEPTH || setPawn(tree->board, i, j, tree->level % 2 + 1))
+  if (tree->level >= tree->board->depth
+      || setPawn(tree->board, i, j, tree->level % 2 + 1))
     return;
   if ((newtree = malloc(sizeof(t_tree))) == NULL)
     return;
-  /* affBoard(tree->board); */
   newtree->x = i;
   newtree->y = j;
-  newtree->pawn = NULL;
+  if ((newtree->eaten = checkEaten(tree->board)))
+    team = tree->board->lastp->team;
+  /* affBoard(tree->board); */
   newtree->nextd = NULL;
   newtree->nextp = NULL;
   newtree->board = tree->board;
   newtree->prev = tree;
   newtree->level = tree->level + 1;
-  newtree->value = calcValue(tree->board);
+  if (checkWin(tree->board))
+    {
+      /* affBoard(tree->board); */
+      newtree->value = (tree->level % 2) * - 500 + 300;
+    }
+    else
+    newtree->value = calcValue(newtree);
   if (tree->nextd)
     {
       tmp = tree->nextd;
@@ -91,11 +100,19 @@ void		addItemBranch(t_tree *tree, int i, int j)
     }
   else
     tree->nextd = newtree;
-  if (newtree->level < DEPTH)
+  if (newtree->level < tree->board->depth)
     {
       addBranch(newtree);
     }
   removePawnAt(tree->board, i, j);
+  pawn = newtree->eaten;
+  while (pawn)
+    {
+      team->stones -= 1;
+      setPawn(tree->board, pawn->x, pawn->y, (tree->level % 2) * - 1 + 2);
+      pawn = pawn->next;
+    }
+  tree->board->level -= 1;
 }
 
 void		addBranch(t_tree *tree)
@@ -138,6 +155,8 @@ int		calcValRec(t_tree *tree)
   tmp = tree->nextd;
   if (!tmp)
     return (tree->value);
+  if (tree->value == -100 || tree->value == 200)
+    return (tree->value);
   if (tree->level % 2)
     max = 100;
   else
@@ -145,19 +164,17 @@ int		calcValRec(t_tree *tree)
   while (tmp)
     {
       val = calcValRec(tmp);
-      /* printf("WESH = %d\n", val); */
       if (tree->level % 2 && val < max)
 	max = val;
       else if (tree->level % 2 == 0 && val > max)
 	max = val;
       tmp = tmp->nextp;
     }
-  /* printf("MIX : %2d | %2d\n", max, tree->value); */
-  max = (tree->value + max) / 2;
+  max = (tree->value + max * 9) / 10;
   return (max);
 }
 
-void		makeAI(t_tree *tree)
+t_pawn		*makeAI(t_tree *tree)
 {
   t_tree	*tmp;
   t_tree	*best;
@@ -166,18 +183,39 @@ void		makeAI(t_tree *tree)
 
   max = 0;
   tmp = tree->nextd;
-  affBoard(tmp->board);
   while (tmp)
     {
       val = calcValRec(tmp);
-      /* printf("X = %2d | Y = %2d | VAL = %d\n", tmp->x, tmp->y, val); */
       if (val >= max)
-	{
-	  max = val;
-	  best = tmp;
-	}
+  	{
+  	  max = val;
+  	  best = tmp;
+  	}
       tmp = tmp->nextp;
     }
-  /* best = best; */
-  printf("X = %2d | Y = %2d\n", best->x, best->y);
+  setPawn(tree->board, best->x, best->y, 1);
+  return (tree->board->lastp);
+}
+
+t_pawn		*setPawnAI(t_board *board)
+{
+  t_pawn	*pawn;
+  t_tree	*tree;
+
+  if (board->level == 0)
+    {
+      setPawn(board, 10, 10, 1);
+      affBoard(board);
+      return (board->lastp);
+    }
+  if (board->level == 1)
+    {
+      setPawn(board, board->lastp->x + 1, board->lastp->y, 1);
+      affBoard(board);
+      return (board->lastp);
+    }
+  tree = newTree(board);
+  pawn = makeAI(tree);
+  board->level += 1;
+  return (pawn);
 }

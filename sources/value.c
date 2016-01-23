@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Wed Jan 20 17:47:44 2016 hirt_r
-** Last update Fri Jan 22 20:22:38 2016 hirt_r
+** Last update Sat Jan 23 02:06:37 2016 hirt_r
 */
 
 #include <stdlib.h>
@@ -34,6 +34,8 @@ int		poww(int n, int p)
   int		i;
   int		tmp;
 
+  if (p == 8)
+    return (10000);
   i = -1;
   tmp = 1;
   while (++i < p - 1)
@@ -217,12 +219,14 @@ int		calcValueDiag2(t_board *board, int id)
   return (res);
 }
 
-int		calcValue(t_board *board)
+int		calcValue(t_tree *tree)
 {
   double	tmp1;
   double	tmp2;
   int		res;
+  t_board	*board;
 
+  board = tree->board;
   tmp1 = calcValueRow(board, 1) +
     calcValueCol(board, 1) +
     calcValueDiag1(board, 1) +
@@ -231,8 +235,16 @@ int		calcValue(t_board *board)
     calcValueCol(board, 2) +
     calcValueDiag1(board, 2) +
     calcValueDiag2(board, 2);
+  if (tree->eaten && tree->level % 2)
+    tmp1 += 5;
+  else if (tree->eaten)
+    tmp2 += 5;
+  if (tmp1 > 10000 && tmp2 < 10000)
+    return (300);
+  if (tmp1 < 10000 && tmp2 > 10000)
+    return (-200);
   if (tmp1 == 0 && tmp2 == 0)
-    res = 0.5;
+    res = 50;
   else
     res = tmp1 / (tmp1 + tmp2) * 100;
   return (res);

@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:31:40 2016 hirt_r
-** Last update Wed Jan 20 18:05:01 2016 hirt_r
+** Last update Sat Jan 23 12:39:03 2016 hirt_r
 */
 
 #include "struct_team.h"
@@ -46,6 +46,7 @@ t_board			*newBoard()
   tmp->height = 19;
   tmp->pawns = NULL;
   tmp->level = 0;
+  tmp->depth = 2;
   if ((tmp->teams = newTeams()) == NULL)
     return (NULL);
   return (tmp);

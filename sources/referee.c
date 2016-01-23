@@ -5,17 +5,17 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 16:17:15 2016 hirt_r
-** Last update Thu Jan 21 21:27:25 2016 hirt_r
+** Last update Sat Jan 23 12:41:38 2016 hirt_r
 */
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "struct_team.h"
 #include "struct_pawn.h"
 #include "struct_board.h"
 #include "struct_tree.h"
 #include "board.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
 
 t_pawn	*getPawnAt(t_board *, int, int);
 t_pawn	*addPawnAt(t_board *, int, int);
@@ -204,7 +204,9 @@ int		checkWinDirection(t_board *board, int i, int j)
 	      p3->team->id == id &&
 	      p4->team->id == id &&
 	      p5->team->id == id)
-	    return (1);
+	    {
+	      return (1);
+	    }
 	}
     }
   return (0);

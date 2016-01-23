@@ -5,19 +5,17 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Sat Jan 16 15:54:18 2016 hirt_r
-** Last update Fri Jan 22 19:18:56 2016 hirt_r
+** Last update Sat Jan 23 12:35:32 2016 hirt_r
 */
 
 #ifndef STRUCT_TREE_H_
 # define STRUCT_TREE_H_
 
-#define DEPTH 2
-
 typedef struct	s_tree
 {
   int		x;
   int		y;
-  t_pawn	*pawn;
+  t_pawn	*eaten;
   struct s_tree	*nextd;
   struct s_tree	*nextp;
   struct s_tree	*prev;
