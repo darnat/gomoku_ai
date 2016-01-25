@@ -5,7 +5,7 @@
 ** Login   <hirt_r@epitech.net>
 **
 ** Started on  Wed Jan 20 17:47:44 2016 hirt_r
-** Last update Sat Jan 23 02:06:37 2016 hirt_r
+** Last update Sat Jan 23 15:09:47 2016 hirt_r
 */
 
 #include <stdlib.h>
@@ -135,6 +135,7 @@ int		calcValueDiag1(t_board *board, int id)
   a = -1;
   while (++a < board->width * 2)
     {
+      tmp = 0;
       if (a < board->width)
 	{
 	  i = board->width - 1 - a;
@@ -184,6 +185,7 @@ int		calcValueDiag2(t_board *board, int id)
   a = -1;
   while (++a < board->width * 2)
     {
+      tmp = 0;
       if (a < board->width)
 	{
 	  i = 0;
