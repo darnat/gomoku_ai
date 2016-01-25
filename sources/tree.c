@@ -87,7 +87,7 @@ void		addItemBranch(t_tree *tree, int i, int j)
   if (checkWin(tree->board))
     {
       /* affBoard(tree->board); */
-      newtree->value = (tree->level % 2) * - 500 + 300;
+      newtree->value = (tree->level % 2) * - 700 + 400;
     }
     else
     newtree->value = calcValue(newtree);
@@ -170,7 +170,7 @@ int		calcValRec(t_tree *tree)
 	max = val;
       tmp = tmp->nextp;
     }
-  max = (tree->value + max * 9) / 10;
+  max = (tree->value + max * 6) / 7;
   return (max);
 }
 
@@ -183,6 +183,7 @@ t_pawn		*makeAI(t_tree *tree)
 
   max = 0;
   tmp = tree->nextd;
+  best = NULL;
   while (tmp)
     {
       val = calcValRec(tmp);
@@ -193,7 +194,11 @@ t_pawn		*makeAI(t_tree *tree)
   	}
       tmp = tmp->nextp;
     }
-  setPawn(tree->board, best->x, best->y, 1);
+    if (best) {
+       setPawn(tree->board, best->x, best->y, 1);
+    } else {
+        setPawn(tree->board, tree->nextd->x, tree->nextd->y, 1);
+    }
   return (tree->board->lastp);
 }
 
@@ -205,13 +210,13 @@ t_pawn		*setPawnAI(t_board *board)
   if (board->level == 0)
     {
       setPawn(board, 10, 10, 1);
-      affBoard(board);
+      //affBoard(board);
       return (board->lastp);
     }
   if (board->level == 1)
     {
       setPawn(board, board->lastp->x + 1, board->lastp->y, 1);
-      affBoard(board);
+      //affBoard(board);
       return (board->lastp);
     }
   tree = newTree(board);

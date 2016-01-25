@@ -135,6 +135,7 @@ int		calcValueDiag1(t_board *board, int id)
   a = -1;
   while (++a < board->width * 2)
     {
+    tmp = 0;
       if (a < board->width)
 	{
 	  i = board->width - 1 - a;
@@ -184,6 +185,7 @@ int		calcValueDiag2(t_board *board, int id)
   a = -1;
   while (++a < board->width * 2)
     {
+        tmp = 0;
       if (a < board->width)
 	{
 	  i = 0;
@@ -236,9 +238,9 @@ int		calcValue(t_tree *tree)
     calcValueDiag1(board, 2) +
     calcValueDiag2(board, 2);
   if (tree->eaten && tree->level % 2)
-    tmp1 += 5;
+    tmp1 += 50;
   else if (tree->eaten)
-    tmp2 += 5;
+    tmp2 += 50;
   if (tmp1 > 10000 && tmp2 < 10000)
     return (300);
   if (tmp1 < 10000 && tmp2 > 10000)

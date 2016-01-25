@@ -9,6 +9,17 @@
 #ifndef socket_h
 #define socket_h
 
-#include <stdio.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+typedef struct          s_socket
+{
+    int                 fd;
+    int                 is_running;
+    int                 port;
+    char                *addr;
+    fd_set              readfs;
+}                       t_socket;
 
 #endif /* socket_h */

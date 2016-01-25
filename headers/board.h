@@ -11,6 +11,8 @@
 #ifndef board_h
 #define board_h
 
+# include "socket.h"
+
 t_board		*newBoard();
 t_pawn		*checkEaten(t_board *);
 t_pawn		*addPawn(t_pawn **, int, int);
@@ -22,5 +24,14 @@ void		addBranch(t_tree *);
 int		calcValue(t_tree *);
 t_pawn		*makeAI(t_tree *);
 t_pawn		*setPawnAI(t_board *);
+void write_to_serve(t_socket *, char *);
+char *read_from_server(t_socket *);
+int server_write(t_socket *);
+void set_client(t_socket *);
+int init_socket(t_socket *);
+t_socket *create_socket();
+int	connect_socket(t_socket *);
+int select_socket(t_socket *);
+void end_socket(t_socket *);
 
 #endif /* board_h */
