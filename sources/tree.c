@@ -48,11 +48,11 @@ int		checkValid(t_board *board, int i, int j)
   int		y;
   t_pawn	*pawn;
 
-  x = -3;
-  while (++x < 3)
+  x = -2;
+  while (++x < 2)
     {
-      y = -3;
-      while (++y < 3)
+      y = -2;
+      while (++y < 2)
 	{
 	  pawn = getPawnAt(board, i + x, j + y);
 	  if (pawn)
@@ -210,11 +210,7 @@ int		calcValRec(t_tree *tree)
       tmp = tmp->nextp;
       free(tmpfree);
     }
-<<<<<<< HEAD
-  max = (tree->value + max * 6) / 7;
-=======
   max = tree->value;
->>>>>>> 3ae15ae95ac275d4ccef34e3f1add7f23fd5e571
   return (max);
 }
 
